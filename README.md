@@ -4,7 +4,7 @@
 
 This repository contains a Node.js application designed to interact with Google Cloud services using the Google Cloud APIs. The application demonstrates retrieving IAM policies, roles, service accounts, and groups by leveraging the Google Cloud Identity and Access Management (IAM) API and Cloud Identity API.
 
-**Note:** This is a demo account, so I have synced the `.env` file and the service account credentials file to GitHub. **This is NOT a recommended practice** for production environments. After the demo, I will make the repository private.
+**Note:** This is a demo account, so I have synced the `.env` file to GitHub. **This is NOT a recommended practice** for production environments. After the demo, I will make the repository private.
 
 
 ## Getting Started
@@ -34,12 +34,12 @@ $ npm run dev
 ### Update .env file with your own google credentials
 
 ```bash
-GOOGLE_API_CREDENTIALS=PATH_TO_YOUR_GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_JSON
+GOOGLE_API_CREDENTIALS=/secrets/YOUR_GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_JSON
 GOOGLE_CUSTOMER_ID=YOUR_GOOGLE_CUSTOMER_ID
 GOOGLE_PROJECT_ID=YOUR_GOOGLE_PROJECT_ID
 ```
 
-** Replace the credential json file in "/configs/google/api/" directory.
+** Add the credential json file in "/secrets/" directory.
 
 ## How to get your api credential?
 
@@ -49,9 +49,7 @@ GOOGLE_PROJECT_ID=YOUR_GOOGLE_PROJECT_ID
 4. To create a new service account, click Create Service Account, provide a name, description, and click Create.
 5. Click on Keys and then select Add Key > Create New Key.
 6. Choose the JSON key type and click Create. This will download your credentials file in JSON format.
-7. Save this file in "/configs/google/api/" and set the GOOGLE_API_CREDENTIALS variable in your .env file to the path of this file. 
-
-** **This is NOT a recommended practice, you should never sync any secrets to github** **
+7. Save this file in "/secrets/" and set the GOOGLE_API_CREDENTIALS variable in your .env file to the path of this file.
 
 ## How to find your customer id
 
