@@ -17,7 +17,7 @@ const methodNotAllowed = (req, res) => {
 router
   .route("/")
   .get((req, res) => {
-    res.send("Hello Opsberry");
+    res.send("Hello OpsBerry");
   })
   .all(methodNotAllowed);
 

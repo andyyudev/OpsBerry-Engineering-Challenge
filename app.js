@@ -11,5 +11,5 @@ app.use("/", require("./routes/")());
 // Start server
 // =============================================================
 app.listen(port, () => {
-  console.log(`Opsberry API server listening on port ${port}`);
+  console.log(`OpsBerry API server listening on port ${port}`);
 });
