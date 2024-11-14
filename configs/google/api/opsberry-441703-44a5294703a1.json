@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "opsberry-441703",
+  "private_key_id": "44a5294703a168c64bae688d9e1aa4099392c84f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC+w0uOQxm5XT+C\nD4UOK47kIqL2eYtm8RGRjgwpiQ766tnHN3tCt/s14BDSMlwlG+W6IdRnTMXfgyMt\nPSFRgaw8cY6acF5FCdcff/w+SntwtsTl6tBbTZzINGN2D7ZCtlHgsgZ+sdsgrlV0\nrAiFXOAQh1OupYWgEE7qqy1ZG+S1HAboKRME25nJZ4vnfGdBgUVViy1KpJB8M+5p\n5+fwO+cdhsgukujjOYMWMVbvg2CvTXSALOQgWBmVBKe5j87hxS8ph4dQPX/ujnQi\nomIKSAKZK7A+O0szapS85Ezyz4cXU6bWmi7gMLaKevPhlqYv61EA18dssZ977y7V\n2GEjpZA5AgMBAAECggEAHgqB+DICTQ9YPv0pW6U/EsI5nk20caOpEUj+CqnLiCGP\n5jA14w3iK7EmNP6P8EVyagYwfYwOOo1bmXY1AbGavsdgnlrvyDjX0zLD4HNjo8kZ\n54iRA1qM7s0BP3MTUBzczAvSZgVQQtdGxzbdqKg1nk9mvZbSHPY0gf7ZsgdofvSt\n/fZpax4r6v+DPG4N1eVjTzXHROANLXEakBZhr5HMKJ2yBMCfjC0zmAsQsXUMwnad\namH4lds2RGRvuAY0XWYW+alx/UEig9H+bh6D3W9cdEmNg6+0DvD6s36awnCJWAiQ\nvpp+cieHcLZKcGd36YuyqxwfQ3IIjNEuQbUjEy6LOQKBgQDjOgDruYM1mLONsplo\nqAAOlyrYi0mxb6ylkQP/2pRcpnYkuMrXQKshf4EcpYBGXQN6F7FV8zM00rqsVXMF\n+Q71XncHoC/EDdOJ1WfLKCBpJ2rsLY+KNfOEZwoQLx1rp0YR9/aeNy9QUUsP+uIj\ncQjic1QQB+4W7YZYD/5eu7W0vwKBgQDW6z+zPKvO78/VoLBFU7lO+J+jFKqkPdVA\n6czTz+qvdpsITfIpwh9DJbY+xihBNelXqkvS5+lG3Nh09IsSq9R+n7ZNJtLBGKCI\nkZmXZbRTr52QlvMINoGn7efGPRtd4iPR+ctGqQXKoF1FSIlotW9y7nKkPRgI11M/\ntRUKnd8hBwKBgHMniSHtYSZ/XbeY5JAaW/UI/SjC5jTrEIbTyEAYyQlvPv57PCj8\nV/3g/VDEOw7twn5UlYWme7Pwe7Qsld9YChGlrxMJRkvIagU3RqO5kTtZQ6GvsUfs\n8Z2PDpWHGxTcr/EZRj2GYA8HM9BEZ+hoN4Vzxw1cx3eNJoFokZP28y5HAoGAFZnh\ndidj8VGjJwqWjPFET86nZOG/4PAiDfsxzhw4r1gRbv0+mLndIIea0KZkB2HeySPh\nqRoMFUY/L0og7Eh+/BcbYJfFWQkboX5Y3KGpRTwCbzTsymeIEpPT1tXveTkwdntP\n1hNI9Lu3hC4tOWv6/qc+uIk3cDQMNvwBWGbTtWMCgYEA2m1HruTEqBUXc6LEH4e7\nubQa1t4TwUW345jhnpDWgtiHwjfpmtnPmQJVFsDdT+bfsu+nO7VHacnWzzWUNdyl\npHvkTxSS+RDO+j6MR0wAiEPuBNVr5NtuW6SmWRH3KnkrFdIZ7gxA6A2i/fCkfZC1\nuN73Ku6GHXQlbEQGC5j3p7Y=\n-----END PRIVATE KEY-----\n",
+  "client_email": "opsberry@opsberry-441703.iam.gserviceaccount.com",
+  "client_id": "105393775279129969489",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/opsberry%40opsberry-441703.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
