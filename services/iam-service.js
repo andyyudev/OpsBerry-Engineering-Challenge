@@ -6,13 +6,20 @@ const { google } = require("googleapis");
 // =============================================================
 class IAMService {
   constructor() {
+    // Set auth
     this.auth = new google.auth.GoogleAuth({
       keyFile: process.env.GOOGLE_API_CREDENTIALS,
       scopes: ["https://www.googleapis.com/auth/cloud-platform"],
     });
+
+    // Set customer id
+    this.customerId = process.env.GOOGLE_CUSTOMER_ID;
+
+    // Set project id
     this.projectId = process.env.GOOGLE_PROJECT_ID;
   }
 
+  // Get auth client
   async getAuthClient() {
     try {
       return await this.auth.getClient();
@@ -26,6 +33,7 @@ class IAMService {
     }
   }
 
+  // List identities
   async listIdentities() {
     try {
       const iam = google.iam({
@@ -37,11 +45,21 @@ class IAMService {
         name: `projects/${this.projectId}`,
       });
 
+      const identities = response.data.accounts || [];
+
+      // Parse data
+      const parsedIdentities = identities.map((identity) => ({
+        resourceType: "Service Account",
+        resourceName: identity.displayName || identity.name,
+        resourceId: identity.uniqueId || identity.email,
+        creationDate: "N/A",
+      }));
+
       return {
         success: true,
         statusCode: 200,
-        message: "Identities fetched successfully",
-        data: response.data.accounts || [],
+        message: "Identities fetched and parsed successfully",
+        data: parsedIdentities,
       };
     } catch (error) {
       return {
@@ -53,6 +71,7 @@ class IAMService {
     }
   }
 
+  // List roles
   async listRoles() {
     try {
       const iam = google.iam({
@@ -68,11 +87,22 @@ class IAMService {
       });
       const customRoles = customRolesResponse.data.roles || [];
 
+      // Merge data
+      const allRoles = [...predefinedRoles, ...customRoles];
+
+      // Parse data
+      const parsedRoles = allRoles.map((role) => ({
+        resourceType: "Role",
+        resourceName: role.title || "N/A",
+        resourceId: role.name || "N/A",
+        creationDate: "N/A",
+      }));
+
       return {
         success: true,
         statusCode: 200,
-        message: "Roles fetched successfully",
-        data: { predefinedRoles, customRoles },
+        message: "Roles fetched and parsed successfully",
+        data: parsedRoles,
       };
     } catch (error) {
       return {
@@ -84,6 +114,7 @@ class IAMService {
     }
   }
 
+  // List groups
   async listGroups() {
     try {
       const cloudIdentity = google.cloudidentity({
@@ -92,14 +123,24 @@ class IAMService {
       });
 
       const response = await cloudIdentity.groups.list({
-        parent: `customers/${process.env.GOOGLE_CUSTOMER_ID}`,
+        parent: `customers/${this.customerId}`,
       });
+
+      const groups = response.data.groups || [];
+
+      // Parse data
+      const parsedGroups = groups.map((group) => ({
+        resourceType: "Group",
+        resourceName: group.displayName || "N/A",
+        resourceId: group.groupKey?.id || "N/A",
+        creationDate: "N/A",
+      }));
 
       return {
         success: true,
         statusCode: 200,
         message: "Groups fetched successfully",
-        data: response.data.groups || [],
+        data: parsedGroups,
       };
     } catch (error) {
       return {
@@ -111,6 +152,7 @@ class IAMService {
     }
   }
 
+  // List policies
   async listPolicies() {
     try {
       // Fetch allow policies using IAM v1 API
@@ -121,7 +163,7 @@ class IAMService {
       const allowPolicyResponse = await cloudResourceManager.projects.getIamPolicy({
         resource: this.projectId,
       });
-      const allowPolicies = allowPolicyResponse.data;
+      const allowPolicies = allowPolicyResponse.data.bindings || [];
 
       // Fetch deny policies using IAM v2 API
       const iam = google.iam({
@@ -134,11 +176,29 @@ class IAMService {
       });
       const denyPolicies = denyPolicyResponse.data.policies || [];
 
+      // Parse data
+      const parsedAllowPolicies = allowPolicies.map((binding) => ({
+        resourceType: "Allow Policy",
+        resourceName: binding.role || "N/A",
+        resourceId: binding.members.join(", ") || "N/A",
+        creationDate: "N/A",
+      }));
+
+      const parsedDenyPolicies = denyPolicies.map((policy) => ({
+        resourceType: "Deny Policy",
+        resourceName: policy.name || "N/A",
+        resourceId: policy.name || "N/A",
+        creationDate: policy.createTime || "N/A",
+      }));
+
+      // Merge data
+      const combinedPolicies = [...parsedAllowPolicies, ...parsedDenyPolicies];
+
       return {
         success: true,
         statusCode: 200,
         message: "Policies fetched successfully",
-        data: { allowPolicies, denyPolicies },
+        data: combinedPolicies,
       };
     } catch (error) {
       return {

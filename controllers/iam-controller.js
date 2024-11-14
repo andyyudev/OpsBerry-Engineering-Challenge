@@ -1,12 +1,10 @@
-// Load env file
-require("dotenv").config();
-
 // Load node modules
 // =============================================================
 const { google } = require("googleapis");
 
 // Load services
 // =============================================================
+// const queueService = require("../services/queue-service");
 const iamService = require("../services/iam-service");
 
 // Create controller

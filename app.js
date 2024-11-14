@@ -1,3 +1,6 @@
+// Load env file
+require("dotenv").config();
+
 // Load node modules
 // =============================================================
 const express = require("express");
