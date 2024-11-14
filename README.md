@@ -88,5 +88,10 @@ GOOGLE_PROJECT_ID=YOUR_GOOGLE_PROJECT_ID
   - URL: http://localhost:3000/policies
   - SOURCE: Retrieves allow policies using the Google Cloud Resource Manager API and deny policies using the Google IAM API v2 for a specified Google Cloud project.
 
-## System Design Considerations
+## To Do
 
+1. Parse output results according to instruction.
+2. Implement message queues.
+3. UI for customize credentials?
+
+## System Design Considerations
