@@ -1,6 +1,5 @@
 // Load node modules
 // =============================================================
-const { google } = require("googleapis");
 
 // Load services
 // =============================================================
@@ -15,7 +14,6 @@ class IAMController {
       const identities = await iamService.listIdentities();
       res.status(200).json(identities);
     } catch (error) {
-      console.error("Error fetching identities:", error);
       res.status(500).json({
         success: false,
         statusCode: 500,
@@ -34,7 +32,6 @@ class IAMController {
         message: "Request to fetch identities has been queued",
       });
     } catch (error) {
-      console.error("Error queuing job to fetch identities:", error);
       res.status(500).json({
         success: false,
         statusCode: 500,
@@ -81,7 +78,6 @@ class IAMController {
       const groups = await iamService.listGroups();
       res.status(200).json(groups);
     } catch (error) {
-      console.error("Error fetching groups:", error);
       res.status(500).json({
         success: false,
         statusCode: 500,
@@ -114,7 +110,6 @@ class IAMController {
       const policies = await iamService.listPolicies();
       res.status(200).json(policies);
     } catch (error) {
-      console.error("Error fetching policies:", error);
       res.status(500).json({
         success: false,
         statusCode: 500,

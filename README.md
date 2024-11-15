@@ -4,6 +4,8 @@
 
 This repository contains a Node.js application designed to interact with Google Cloud services using the Google Cloud APIs. The application demonstrates retrieving IAM policies, roles, service accounts, and groups by leveraging the Google Cloud Identity and Access Management (IAM) API and Cloud Identity API.
 
+I’ve also added queue functionality to different endpoints. However, a Redis server is required for it to work. The server can run either locally or remotely; simply update the .env file to configure the connection.
+
 **Note:** This is a demo account, so I have synced the `.env` file to GitHub. **This is NOT a recommended practice** for production environments. After the demo, I will make the repository private.
 
 
@@ -88,7 +90,7 @@ GOOGLE_PROJECT_ID=YOUR_GOOGLE_PROJECT_ID
   - URL: http://localhost:3000/api/policies
   - SOURCE: Retrieves allow policies using the Google Cloud Resource Manager API and deny policies using the Google IAM API v2 for a specified Google Cloud project.
 
-## Queues Endpoint (Bonus)
+## Queues Endpoints (Bonus)
 
 This is a simple example demonstrating the use of message queues between requests and services. A Redis server is required for this functionality to work; you can either run it locally or use a remote Redis server. Update the configuration in the .env file accordingly.
 
@@ -114,9 +116,11 @@ After making a request in the browser, you will see a status 202 response indica
 
 Since this is a simple demo, several key features were not implemented:
 
-1. An API gateway for enhanced security measures, such as rate limiting, throttling, authentication, authorization, and handling CORS.
-2. Persistent data storage, which typically involves using a database, was not included.
-3. Mechanisms for API retries and handling failures have not been considered.
-4. Google API request pagination was not implemented; in a real-world application, each page token would be sent to message queues for further processing.
-5. Observability tools, such as Sentry, Winston, or other logging and monitoring solutions, were not included.
-6. And more...
+1. Enable inputting custom credentials without relying on the .env file.
+2. Utilize secret management systems to securely store custom credentials.
+3. An API gateway for enhanced security measures, such as rate limiting, throttling, authentication, authorization, and handling CORS.
+4. Persistent data storage, which typically involves using a database, was not included.
+5. Mechanisms for API retries and handling failures have not been considered.
+6. Google API request pagination was not implemented; in a real-world application, each page token would be sent to message queues for further processing.
+7. Observability tools, such as Sentry, Winston, or other logging and monitoring solutions, were not included.
+8. And more...
