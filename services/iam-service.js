@@ -17,6 +17,13 @@ class IAMService {
 
     // Set project id
     this.projectId = process.env.GOOGLE_PROJECT_ID;
+
+    // Bind methods
+    this.getAuthClient = this.getAuthClient.bind(this);
+    this.listIdentities = this.listIdentities.bind(this);
+    this.listRoles = this.listRoles.bind(this);
+    this.listGroups = this.listGroups.bind(this);
+    this.listPolicies = this.listPolicies.bind(this);
   }
 
   // Get auth client
@@ -45,10 +52,8 @@ class IAMService {
         name: `projects/${this.projectId}`,
       });
 
-      const identities = response.data.accounts || [];
-
       // Parse data
-      const parsedIdentities = identities.map((identity) => ({
+      const parsedIdentities = (response.data.accounts || []).map((identity) => ({
         resourceType: "Service Account",
         resourceName: identity.displayName || identity.name,
         resourceId: identity.uniqueId || identity.email,
@@ -87,7 +92,7 @@ class IAMService {
       });
       const customRoles = customRolesResponse.data.roles || [];
 
-      // Merge data
+      // Combine data
       const allRoles = [...predefinedRoles, ...customRoles];
 
       // Parse data
@@ -126,10 +131,8 @@ class IAMService {
         parent: `customers/${this.customerId}`,
       });
 
-      const groups = response.data.groups || [];
-
       // Parse data
-      const parsedGroups = groups.map((group) => ({
+      const parsedGroups = (response.data.groups || []).map((group) => ({
         resourceType: "Group",
         resourceName: group.displayName || "N/A",
         resourceId: group.groupKey?.id || "N/A",
@@ -191,7 +194,7 @@ class IAMService {
         creationDate: policy.createTime || "N/A",
       }));
 
-      // Merge data
+      // Combine data
       const combinedPolicies = [...parsedAllowPolicies, ...parsedDenyPolicies];
 
       return {

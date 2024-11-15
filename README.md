@@ -70,28 +70,53 @@ GOOGLE_PROJECT_ID=YOUR_GOOGLE_PROJECT_ID
 
 - Get Identities
   - Endpoint: GET /identities
-  - URL: http://localhost:3000/identities
+  - URL: http://localhost:3000/api/identities
   - SOURCE: Uses the Google IAM API to retrieve a list of service accounts associated with a specified Google Cloud project.
 
 - Get Roles
   - Endpoint: GET /roles
-  - URL: http://localhost:3000/roles
+  - URL: http://localhost:3000/api/roles
   - SOURCE: Uses the Google IAM API to retrieve all predefined roles offered by Google Cloud and any custom roles defined within a specified Google Cloud project.
 
 - Get Groups
   - Endpoint: GET /groups
-  - URL: http://localhost:3000/groups
+  - URL: http://localhost:3000/api/groups
   - SOURCE: Uses the Google Cloud Identity API to retrieve groups associated with a specified Google Workspace or Cloud Identity customer.
 
 - Get Policies
   - Endpoint: GET /policies
-  - URL: http://localhost:3000/policies
+  - URL: http://localhost:3000/api/policies
   - SOURCE: Retrieves allow policies using the Google Cloud Resource Manager API and deny policies using the Google IAM API v2 for a specified Google Cloud project.
 
-## To Do
+## Queues Endpoint (Bonus)
 
-1. Parse output results according to instruction.
-2. Implement message queues.
-3. UI for customize credentials?
+This is a simple example demonstrating the use of message queues between requests and services. A Redis server is required for this functionality to work; you can either run it locally or use a remote Redis server. Update the configuration in the .env file accordingly.
 
-## System Design Considerations
+After making a request in the browser, you will see a status 202 response indicating that the job is currently queued for processing. The results will appear in the server’s console because I have not implemented a front-end UI to update the screen when the job is completed.
+
+- Get Identities
+  - Endpoint: GET /identities
+  - URL: http://localhost:3000/queues/identities
+
+- Get Roles
+  - Endpoint: GET /roles
+  - URL: http://localhost:3000/queues/roles
+
+- Get Groups
+  - Endpoint: GET /groups
+  - URL: http://localhost:3000/queues/groups
+
+- Get Policies
+  - Endpoint: GET /policies
+  - URL: http://localhost:3000/queues/policies
+
+## Missing Features & Future Improvements
+
+Since this is a simple demo, several key features were not implemented:
+
+1. An API gateway for enhanced security measures, such as rate limiting, throttling, authentication, authorization, and handling CORS.
+2. Persistent data storage, which typically involves using a database, was not included.
+3. Mechanisms for API retries and handling failures have not been considered.
+4. Google API request pagination was not implemented; in a real-world application, each page token would be sent to message queues for further processing.
+5. Observability tools, such as Sentry, Winston, or other logging and monitoring solutions, were not included.
+6. And more...

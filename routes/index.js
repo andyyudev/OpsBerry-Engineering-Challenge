@@ -21,17 +21,34 @@ router
   })
   .all(methodNotAllowed);
 
+// API routes
 // IAM identities
-router.route("/identities").get(iamController.getIdentities.bind(iamController)).all(methodNotAllowed);
-
+router.route("/api/identities").get(iamController.getIdentities.bind(iamController)).all(methodNotAllowed);
 // IAM roles route
-router.route("/roles").get(iamController.getRoles.bind(iamController)).all(methodNotAllowed);
-
+router.route("/api/roles").get(iamController.getRoles.bind(iamController)).all(methodNotAllowed);
 // IAM groups route
-router.route("/groups").get(iamController.getGroups.bind(iamController)).all(methodNotAllowed);
-
+router.route("/api/groups").get(iamController.getGroups.bind(iamController)).all(methodNotAllowed);
 // IAM policies route
-router.route("/policies").get(iamController.getPolicies.bind(iamController)).all(methodNotAllowed);
+router.route("/api/policies").get(iamController.getPolicies.bind(iamController)).all(methodNotAllowed);
+
+// Queues routes
+// IAM identities
+router.route("/queues/identities").get(iamController.fetchIdentities.bind(iamController)).all(methodNotAllowed);
+// IAM roles route
+router.route("/queues/roles").get(iamController.fetchRoles.bind(iamController)).all(methodNotAllowed);
+// IAM groups route
+router.route("/queues/groups").get(iamController.fetchGroups.bind(iamController)).all(methodNotAllowed);
+// IAM policies route
+router.route("/queues/policies").get(iamController.fetchPolicies.bind(iamController)).all(methodNotAllowed);
+
+// Catch-all route for unmatched paths
+router.all("*", (req, res) => {
+  res.status(404).send({
+    success: false,
+    statusCode: 404,
+    message: "Route Not Found",
+  });
+});
 
 // Export the router
 // =============================================================

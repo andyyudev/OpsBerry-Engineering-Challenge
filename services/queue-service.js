@@ -1,54 +1,69 @@
 // Load node modules
 // =============================================================
-const Queue = require("bull");
+const { Queue, Worker } = require("bullmq");
+
+// Load services
+// =============================================================
+const IAMService = require("./iam-service");
+
+// Redis configuration
+// =============================================================
 const redisConfig = {
   host: process.env.REDIS_HOST || "127.0.0.1",
   port: process.env.REDIS_PORT || 6379,
 };
 
-// Create a new queue instance with a configurable name
-function createQueue(queueName) {
-  return new Queue(queueName, { redis: redisConfig });
-}
+// Create a new queue
+const queue = new Queue("queue", {
+  connection: redisConfig,
+});
 
-// Function to create and manage a queue
-function createQueueService(queueName, jobHandlers = {}) {
-  const queue = createQueue(queueName);
+// Add job to queue
+const addJobToQueue = async (queueName, jobName, data) => {
+  const queue = new Queue(queueName, { connection: redisConfig });
+  await queue.add(jobName, data);
+};
 
-  // Function to add a job to the queue
-  function addJob(jobName, data) {
-    return queue.add(jobName, data);
-  }
+// Mapping of job names to service methods
+const jobServiceMapping = {
+  fetchIdentities: IAMService.listIdentities,
+  fetchRoles: IAMService.listRoles,
+  fetchGroups: IAMService.listGroups,
+  fetchPolicies: IAMService.listPolicies,
+};
 
-  // Process jobs in the queue
-  queue.process(async (job) => {
-    try {
-      console.log(`Processing job ${job.id} of type ${job.name}`);
-      if (jobHandlers[job.name]) {
-        // Call the appropriate handler if it exists
-        await jobHandlers[job.name](job.data);
-      } else {
-        console.warn(`No handler found for job type: ${job.name}`);
+// Worker to process jobs
+const worker = new Worker(
+  "queue",
+  async (job) => {
+    console.log(`Processing job ${job.id} of ${job.name}`);
+
+    const serviceFunction = jobServiceMapping[job.name];
+
+    if (serviceFunction) {
+      try {
+        const result = await serviceFunction();
+        console.log(`Fetched data:`, result);
+      } catch (error) {
+        console.error(`Error processing job ${job.name}:`, error);
       }
-    } catch (error) {
-      console.error(`Error processing job ${job.id}:`, error);
-      throw error; // Rethrow the error to retry the job if necessary
+    } else {
+      console.warn(`Unknown job type: ${job.name}`);
     }
-  });
+  },
+  {
+    connection: redisConfig,
+  }
+);
 
-  // Handle job completion
-  queue.on("completed", (job, result) => {
-    console.log(`Job completed: ${job.id}`);
-  });
+worker.on("completed", (job) => {
+  console.log(`Job ${job.id} completed successfully.`);
+});
 
-  // Handle job failure
-  queue.on("failed", (job, err) => {
-    console.error(`Job failed: ${job.id}`, err);
-  });
+worker.on("failed", (job, err) => {
+  console.error(`Job ${job.id} failed with error:`, err);
+});
 
-  return {
-    addJob,
-  };
-}
-
-module.exports = createQueueService;
+module.exports = {
+  addJobToQueue,
+};
