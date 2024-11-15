@@ -6,7 +6,7 @@ const router = require("express").Router();
 // =============================================================
 const iamController = require("../controllers/iam-controller");
 
-// Utility function to handle method not allowed responses
+// Handle method not allowed responses
 const methodNotAllowed = (req, res) => {
   res.status(405).send({ message: "Method Not Allowed" });
 };
@@ -24,21 +24,21 @@ router
 // API routes
 // IAM identities
 router.route("/api/identities").get(iamController.getIdentities.bind(iamController)).all(methodNotAllowed);
-// IAM roles route
+// IAM roles
 router.route("/api/roles").get(iamController.getRoles.bind(iamController)).all(methodNotAllowed);
-// IAM groups route
+// IAM groups
 router.route("/api/groups").get(iamController.getGroups.bind(iamController)).all(methodNotAllowed);
-// IAM policies route
+// IAM policies
 router.route("/api/policies").get(iamController.getPolicies.bind(iamController)).all(methodNotAllowed);
 
 // Queues routes
 // IAM identities
 router.route("/queues/identities").get(iamController.fetchIdentities.bind(iamController)).all(methodNotAllowed);
-// IAM roles route
+// IAM roles
 router.route("/queues/roles").get(iamController.fetchRoles.bind(iamController)).all(methodNotAllowed);
-// IAM groups route
+// IAM groups
 router.route("/queues/groups").get(iamController.fetchGroups.bind(iamController)).all(methodNotAllowed);
-// IAM policies route
+// IAM policies
 router.route("/queues/policies").get(iamController.fetchPolicies.bind(iamController)).all(methodNotAllowed);
 
 // Catch-all route for unmatched paths

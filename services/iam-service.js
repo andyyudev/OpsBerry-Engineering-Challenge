@@ -57,7 +57,7 @@ class IAMService {
         resourceType: "Service Account",
         resourceName: identity.displayName || identity.name,
         resourceId: identity.uniqueId || identity.email,
-        creationDate: "N/A",
+        creationDate: null,
       }));
 
       return {
@@ -98,9 +98,9 @@ class IAMService {
       // Parse data
       const parsedRoles = allRoles.map((role) => ({
         resourceType: "Role",
-        resourceName: role.title || "N/A",
-        resourceId: role.name || "N/A",
-        creationDate: "N/A",
+        resourceName: role.title || null,
+        resourceId: role.name || null,
+        creationDate: null,
       }));
 
       return {
@@ -134,9 +134,9 @@ class IAMService {
       // Parse data
       const parsedGroups = (response.data.groups || []).map((group) => ({
         resourceType: "Group",
-        resourceName: group.displayName || "N/A",
-        resourceId: group.groupKey?.id || "N/A",
-        creationDate: "N/A",
+        resourceName: group.displayName || null,
+        resourceId: group.groupKey?.id || null,
+        creationDate: null,
       }));
 
       return {
@@ -182,16 +182,16 @@ class IAMService {
       // Parse data
       const parsedAllowPolicies = allowPolicies.map((binding) => ({
         resourceType: "Allow Policy",
-        resourceName: binding.role || "N/A",
-        resourceId: binding.members.join(", ") || "N/A",
-        creationDate: "N/A",
+        resourceName: binding.role || null,
+        resourceId: binding.members.join(", ") || null,
+        creationDate: null,
       }));
 
       const parsedDenyPolicies = denyPolicies.map((policy) => ({
         resourceType: "Deny Policy",
-        resourceName: policy.name || "N/A",
-        resourceId: policy.name || "N/A",
-        creationDate: policy.createTime || "N/A",
+        resourceName: policy.name || null,
+        resourceId: policy.name || null,
+        creationDate: policy.createTime || null,
       }));
 
       // Combine data
